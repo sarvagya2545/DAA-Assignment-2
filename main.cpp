@@ -9,10 +9,10 @@ int n;
 /// @param y index value of base 2
 /// @returns boolean value telling if the bases at index x & y can form a bond or not
 bool match(string s, int x, int y) {
-  if (s[x - 1] == 'A' && s[y - 1] == 'U' ||
-      s[x - 1] == 'G' && s[y - 1] == 'C' ||
-      s[x - 1] == 'U' && s[y - 1] == 'A' ||
-      s[x - 1] == 'C' && s[y - 1] == 'G') {
+  if (((s[x - 1] == 'A') && (s[y - 1] == 'U')) ||
+      ((s[x - 1] == 'G') && (s[y - 1] == 'C')) ||
+      ((s[x - 1] == 'U') && (s[y - 1] == 'A')) ||
+      ((s[x - 1] == 'C') && (s[y - 1] == 'G'))) {
     return true;
   }
 
@@ -83,6 +83,7 @@ void print_pairs(vector<vector<int>> &split, string &RNAseq, int x = 1, int y = 
 
 int main() {
   string RNAsequence;
+  cout << "Enter the RNA Sequence: \n";
   cin >> RNAsequence;
   n = RNAsequence.size();
 
