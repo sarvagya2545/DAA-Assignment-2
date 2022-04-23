@@ -3,7 +3,11 @@
 using namespace std;
 
 int n;
-
+/// @brief Function to tell whether or not 2 bases can form a bond in the RNA or not
+/// @param s the String representation of RNA
+/// @param x index value of base 1
+/// @param y index value of base 2
+/// @returns boolean value telling if the bases at index x & y can form a bond or not
 bool match(string s, int x, int y) {
   if (s[x - 1] == 'A' && s[y - 1] == 'U' ||
       s[x - 1] == 'G' && s[y - 1] == 'C' ||
@@ -15,7 +19,11 @@ bool match(string s, int x, int y) {
   return false;
 }
 
-void find_and_count_pairs(vector<vector<int>> &opt, string RNAsequence, vector<vector<int>> &split) {
+/// @brief Function to find and count the max number of bonds formed in the RNA
+/// @param opt DP Matrix where opt[i][j] = max number of bonds formed when the strand is RNA[i..j]
+/// @param RNAsequence String representation of the RNA
+/// @param split an empty matrix to be filled such that split[i][j] = t if (t,j) bond is formed, else split[i][j] = -1 if no bond from j is formed
+void find_and_count_pairs(vector<vector<int>> &opt, string &RNAsequence, vector<vector<int>> &split) {
   // k = window size
   for (int k = 5; k <= n - 1; k++) { 
     for (int i = 1; i <= n - k; i++) {
@@ -44,17 +52,20 @@ void find_and_count_pairs(vector<vector<int>> &opt, string RNAsequence, vector<v
         split[i][j] = t_val;
         opt[i][j] = temp;
       }
-      // opt[i][j] = max(opt[i][j - 1], temp);
     }
   }
 }
 
 int pair_num = 1;
 
+/// @brief Function to print all the bonds form between bases in a RNA strand
+/// @param split A grid where for 1 <= i < j <= n, split[i][j] = t or -1, t is the position where (t,j) is a bond
+/// @param RNAseq string representation for the input RNA
+/// @param x left index of the part of string considered
+/// @param y right index of the part of string considered
 void print_pairs(vector<vector<int>> &split, string &RNAseq, int x = 1, int y = n) {
   if(abs(x - y) < 5) return;
   
-  // pair<int,int> p = split[x][y];
   if(split[x][y] == -1) {
     print_pairs(split, RNAseq, x, y - 1);
   } else {
